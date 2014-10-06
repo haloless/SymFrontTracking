@@ -1,0 +1,36 @@
+...................................................................................
+.    Header for the input file, total of five lines
+.    A bubble rising to a free surface
+.    Grid size and inital velocity field is set in the code
+...................................................................................
+600,20.0,2.0,2.0                             max steps, max time, xl, yl
+2.5,0.25,2.5,0.007,0.07,0.0,1.0             outer density, rho_1, rho_2, mu_1, mu_2,gx,gy
+1000,0.000001,1.2                           Parameters for pressure solution
+0,1,0.0,0.0,0.0,0.0                         Boundary conditions: ibdry,jbdry,wall velocities
+1,1,20000                                   Printout: velocity,pressure,backup
+ex1                                         Prefix for output files  
+false                                       Is this a restart?
+2
+3,0.0,2.0,1.5,-2.25,0.05                    Interface: type,ampl,Lx,yc,density jump, surface tension
+1,0.3,1.0,0.5,-2.25,0.05                    Bubble: type,radius,xc,yc,density jump, surface tension 
+0.0                                         Times for printout
+1.0
+2.0
+3.0
+4.0
+5.0
+6.0
+7.0 
+8.0
+9.0
+10.0
+11.0
+12.0
+13.0
+14.0
+15.0
+16.0
+17.0
+18.0
+19.0
+20.0

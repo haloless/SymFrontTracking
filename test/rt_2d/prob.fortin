@@ -1,0 +1,56 @@
+&fortin
+
+      ! 0=CART, 1=RZ
+      coordsys = 0
+      !coordsys = 1
+      
+      ! 0=PER, 1=SYM
+      bc_xlo = 1
+      bc_xhi = 1
+      bc_ylo = 1
+      bc_yhi = 1
+      
+      gx = 0.0d0
+      gy = 1.0d0
+      rho1 = 0.25d0
+      rho2 = 1.00d0
+      rro = 1.0d0
+      mu1   = 0.5d-2
+      mu2   = 2.0d-2
+      !mu1   = 0.0d0
+      !mu2   = 0.0d0
+      sigma = 0.075d0
+      
+      
+      Lx = 6.283185307d0
+      Ly = 18.84955592d0
+      nx = 40
+      ny = 120
+      
+      
+      maxiter = 4000
+      maxerr = 1.0d-3
+      beta = 1.5d0
+      !beta = 0.9d0
+      
+      !
+      probtype = 1
+      eta = 0.1d0
+      omega = 6.283185307d0
+      theta = 0.0d0
+      
+      !Nf = 65
+      Nf = 129
+      
+      dt = 1.0d-2
+      nstep = 1000
+      plot_int = 10
+      !plot_int = 20
+
+
+
+
+
+
+! end
+/

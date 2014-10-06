@@ -1,0 +1,56 @@
+&fortin
+
+      ! 0=CART, 1=RZ
+      coordsys = 0
+      
+      ! 0=PER, 1=SYM
+      bc_xlo = 1
+      bc_xhi = 1
+      bc_ylo = 1
+      bc_yhi = 1
+      
+      gx = 0.0d0
+      gy = 0.0d0
+      rho1 = 1.0d0
+      rho2 = 1.0d0
+      rro = 1.0d0
+      !mu1 = 0.01d0
+      !mu2 = 0.05d0
+      mu1 = 0.10d0
+      mu2 = 0.10d0
+      sigma = 10.0d0
+      
+      
+      Lx = 0.5d0
+      Ly = 1.0d0
+      !nx = 16
+      !ny = 32
+      nx = 32
+      ny = 64
+      
+      
+      maxiter = 4000
+      maxerr = 1.0d-3
+      beta = 1.5d0
+      !beta = 0.9d0
+      
+      
+      ! droplet
+      probtype = 0
+      xc = 0.0d0
+      yc = 0.5d0
+      rad = 0.20d0
+      
+      Nf = 65
+      
+      dt = 0.1d-3
+      nstep = 5000
+      plot_int = 100
+
+
+
+
+
+
+! end
+/
