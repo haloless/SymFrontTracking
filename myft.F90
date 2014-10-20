@@ -59,7 +59,7 @@
       
       !
       integer :: untchk
-      double precision :: chkvol
+      double precision :: chkvol, chkvol0
       
       ! read namelists
       untin = 9
@@ -240,8 +240,8 @@
       call output_front(iplot, xf, yf, uf, vf, tx, ty, Nf)
       iplot = iplot + 1
       
-      call chk_color_volume(chkvol, color, r,rh,nx,ny,dx,dy)
-      write(untchk,*) time,',',chkvol
+      call chk_color_volume(chkvol0, color, r,rh,nx,ny,dx,dy)
+      write(untchk,*) time,',',chkvol0
 
       
       ! main loop
@@ -315,6 +315,14 @@
         !
         call ft_color_grad(Nf, xf,yf, mask,color, fx,fy, nx,ny,dx,dy)
         call ft_color_smooth(fx,fy, mask,color, dens,visc, r,rh, nx,ny,dx,dy)
+        
+        if (.false.) then
+          call chk_color_volume(chkvol, color, r,rh,nx,ny,dx,dy)
+          call ft_volconst(Nf,xf,yf,uf,vf, nx,ny,dx,dy,dt, chkvol,chkvol0)
+          call ft_color_grad(Nf, xf,yf, mask,color, fx,fy, nx,ny,dx,dy)
+          call ft_color_smooth(fx,fy, mask,color, dens,visc, r,rh, nx,ny,dx,dy)
+        endif
+
         
         time = time + dt
         

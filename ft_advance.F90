@@ -38,6 +38,11 @@
           + ax*ay*v(ip+1,jp+1)
       enddo
       
+      !
+      if (.false.) then
+        call ft_divfree(Nf, xf,yf, uf,vf, nx,ny,dx,dy,dt)
+      endif
+      
       ! enforce wall node
       if (.true.) then
         uf(2) = 0.0d0
@@ -130,6 +135,132 @@
       
       return
       end subroutine ft_bndry_pos
+      
+      
+      
+      subroutine ft_divfree( &
+        Nf, &
+        xf, yf, & ! front position
+        uf, vf, & ! front quantity
+        nx, ny, dx, dy, dt)
+      use geom_module, only: coordsys
+      implicit none
+      integer, intent(in) :: Nf
+      double precision, intent(in) :: xf(1:Nf+2), yf(1:Nf+2)
+      double precision, intent(inout) :: uf(1:Nf+2), vf(1:Nf+2)
+      integer, intent(in) :: nx, ny
+      double precision, intent(in) :: dx, dy, dt
+      !
+      integer :: l
+      double precision :: uu, vv
+      double precision :: dxf, dyf, ds
+      double precision :: nxf, nyf
+      double precision :: rr
+      double precision :: divf
+      double precision :: ssum, sdiv
+      
+      ssum = 0.0d0
+      sdiv = 0.0d0
+      
+      do l = 2, Nf
+        ! front element size
+        dxf = xf(l+1) - xf(l)
+        dyf = yf(l+1) - yf(l)
+        ds = sqrt(dxf**2 + dyf**2)
+        ! normal vector
+        nxf = dyf / ds
+        nyf = -dxf / ds
+        
+        ! front element velocity
+        uu = 0.5d0 * (uf(l) + uf(l+1))
+        vv = 0.5d0 * (vf(l) + vf(l+1))
+        
+        divf = (uu*nxf + vv*nyf) * ds
+        
+        if (coordsys == 1) then
+          rr = 0.5d0 * (xf(l) + xf(l+1))
+          ssum = ssum + ds*rr
+          sdiv = sdiv + divf*rr
+        else
+          ssum = ssum + ds
+          sdiv = sdiv + divf
+        endif
+      enddo
+      
+      ! 
+      divf = sdiv / ssum
+      print *, 'divf=',divf
+      
+      do l = 2, Nf+1
+        dxf = xf(l+1) - xf(l-1)
+        dyf = yf(l+1) - yf(l-1)
+        ds = sqrt(dxf**2 + dyf**2)
+        ! normal vector
+        nxf = dyf / ds
+        nyf = -dxf / ds
+        
+        uf(l) = uf(l) - divf*nxf
+        vf(l) = vf(l) - divf*nyf
+      enddo
+      
+      return
+      end subroutine ft_divfree
+      
+      
+      subroutine ft_volconst( &
+        Nf, &
+        xf, yf, & ! front position
+        uf, vf, & ! front quantity
+        nx, ny, dx, dy, dt, &
+        vol, vol0)
+      use geom_module, only: coordsys
+      implicit none
+      integer, intent(in) :: Nf
+      double precision, intent(inout) :: xf(1:Nf+2), yf(1:Nf+2)
+      double precision, intent(inout) :: uf(1:Nf+2), vf(1:Nf+2)
+      integer, intent(in) :: nx, ny
+      double precision, intent(in) :: dx, dy, dt
+      double precision, intent(in) :: vol, vol0
+      !
+      integer :: l
+      double precision :: dxf, dyf, ds
+      double precision :: nxf, nyf
+      double precision :: rr
+      double precision :: ssum
+      
+      ssum = 0.0d0
+      do l = 2, Nf
+        ! front element size
+        dxf = xf(l+1) - xf(l)
+        dyf = yf(l+1) - yf(l)
+        ds = sqrt(dxf**2 + dyf**2)
+        
+        if (coordsys == 1) then
+          rr = 0.5d0 * (xf(l) + xf(l+1))
+          ssum = ssum + ds*rr
+        else
+          ssum = ssum + ds
+        endif
+      enddo
+      
+      !
+      do l = 2, Nf+1
+        dxf = xf(l+1) - xf(l-1)
+        dyf = yf(l+1) - yf(l-1)
+        ds = sqrt(dxf**2 + dyf**2)
+        ! normal vector
+        nxf = dyf / ds
+        nyf = -dxf / ds
+        
+        xf(l) = xf(l) - (vol-vol0)/ssum * nxf
+        yf(l) = yf(l) - (vol-vol0)/ssum * nyf
+      enddo
+      
+      ! set ghost node
+      call ft_bndry_pos(Nf, xf,yf)
+      
+      return
+      end subroutine ft_volconst
 
 
 
