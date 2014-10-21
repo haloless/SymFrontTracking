@@ -1,8 +1,8 @@
 &fortin
 
       ! 0=CART, 1=RZ
-      coordsys = 0
-      !coordsys = 1
+      !coordsys = 0
+      coordsys = 1
       
       ! 0=PER, 1=SYM
       bc_xlo = 1
@@ -19,15 +19,21 @@
       rro = 1.0d0
       mu1 = 0.01d0
       mu2 = 0.05d0
-      sigma = 10.0d0
+      sigma = 5.0d0
       !sigma = 0.0d0
       
       Lx = 0.5d0
       Ly = 1.0d0
-      nx = 16
-      ny = 32
-      dt = 0.00125d0
-      nstep = 1000
+      !nx = 16
+      !ny = 32
+      nx = 32
+      ny = 64
+      !dt = 1.0d-3
+      dt = 1.0d-4
+      !nstep = 1000
+      !plot_int = 10
+      nstep = 10000
+      plot_int = 100
       
       maxiter = 4000
       maxerr = 1.0d-3
@@ -43,11 +49,10 @@
       
       Nf = 33
       
-      plot_int = 10
       
       
       ! SIMPLE
-      niter = 20
+      niter = 40
       sormax = 1.0d-4
       slarge = 1.0d5
       
@@ -66,9 +71,9 @@
       nswp(2) = 5
       nswp(3) = 16
       !nswp(3) = 100
-      cds_mix_factor = 1.0d0
+      !cds_mix_factor = 1.0d0
       !cds_mix_factor = 0.5d0
-      !cds_mix_factor = 0.0d0
+      cds_mix_factor = 0.1d0
 
 
 

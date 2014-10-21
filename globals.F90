@@ -61,9 +61,6 @@
       double precision, save :: maxerr
       double precision, save :: beta
       
-      
-      
-      
       integer, save :: plot_int
       
       !
@@ -75,6 +72,52 @@
       !
       integer, parameter :: maxnf = 4096
       end module front_module
+      
+      module simple_module
+      implicit none
+      !
+      integer, parameter :: NVARS = 3
+      integer, parameter :: IUMAC = 1
+      integer, parameter :: IVMAC = 2
+      integer, parameter :: IPRES = 3
+      ! under relaxation factor
+      double precision, save :: urf(NVARS)
+      !
+      integer, save :: nswp(NVARS)
+      double precision, save :: sor(NVARS), resor(NVARS)
+      
+      !
+      integer, save :: niter
+      double precision, save :: sormax, slarge
+      
+      !
+      double precision, save :: cds_mix_factor
+      
+      ! coefficients
+      double precision, allocatable :: axlo(:,:), axhi(:,:)
+      double precision, allocatable :: aylo(:,:) ,ayhi(:,:)
+      double precision, allocatable :: acen(:,:)
+      ! source term
+      double precision, allocatable :: scen(:,:)
+      ! for pressure correction
+      double precision, allocatable :: udiag(:,:), vdiag(:,:)
+      ! 
+      integer, parameter :: ipref = 2
+      integer, parameter :: jpref = 2
+      
+      end module simple_module
+      
+      module sip_module
+      implicit none
+      ! SIP solver
+      double precision, parameter :: alpha = 0.92d0
+      double precision, allocatable :: lw(:,:), ue(:,:)
+      double precision, allocatable :: ls(:,:), un(:,:)
+      double precision, allocatable :: lpr(:,:), res(:,:)
+      
+      end module sip_module
+      
+      
       
       
       module prob_module

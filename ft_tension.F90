@@ -55,7 +55,7 @@
           nvecx = dyf / ds
           nvecy = -dxf / ds
           
-          invr = abs(nvecx) / (xx)
+          invr = abs(nvecx) / (xx+1.0e-8)
           
           nfx = nfx - sigma*nvecx*invr*ds
           nfy = nfy - sigma*nvecy*invr*ds
